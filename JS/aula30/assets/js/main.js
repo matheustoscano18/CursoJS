@@ -1,39 +1,64 @@
-const relogio = document.querySelector('.relogio');
-const iniciar = document.querySelector('.iniciar');
-const pausar = document.querySelector('.pausar');
-const zerar = document.querySelector('.zerar');
-let segundos = 0;
-let timer;
+function cronometro() {
+    const relogio = document.querySelector('.relogio');
+    let segundos = 0;
+    let timer;
 
-function mostraHora(segundos) {
-    let data = new Date(segundos * 1000);
+    function mostraHora(segundos) {
+        let data = new Date(segundos * 1000);
 
-    return data.toLocaleTimeString('pt-BR', {
-        hour12: false,
-        timeZone: 'UTC'
+        return data.toLocaleTimeString('pt-BR', {
+            hour12: false,
+            timeZone: 'UTC'
+        });
+    }
+
+    function iniciaRelogio() {
+        timer = setInterval(() => {
+            segundos++;
+            relogio.innerHTML = mostraHora(segundos);
+        }, 1000);
+    }
+
+    document.addEventListener('click', function(e) {
+        const el = e.target;
+
+        if (el.classList.contains('zerar')) {
+            relogio.classList.remove('pausado');
+            clearInterval(timer);
+            relogio.innerHTML = '00:00:00';
+            segundos = 0;
+        }
+
+        if (el.classList.contains('iniciar')) {
+            relogio.classList.remove('pausado');
+            clearInterval(timer);
+            iniciaRelogio();
+        }
+
+        if (el.classList.contains('pausar')) {
+            relogio.classList.add('pausado');
+            clearInterval(timer);
+        }
     });
-}
 
-function iniciaRelogio() {
-    timer = setInterval(() => {
-        segundos++;
-        relogio.innerHTML = mostraHora(segundos);
-    }, 1000);
-}
-
-iniciar.addEventListener('click', function() {
+    /**iniciar.addEventListener('click', function() {
+     * 
+    relogio.classList.remove('pausado');
     clearInterval(timer);
     iniciaRelogio();
 });
 
 pausar.addEventListener('click', function() {
+    relogio.classList.add('pausado');
     clearInterval(timer);
-    relogio.style.color = 'red';
 });
 
 zerar.addEventListener('click', function() {
+    relogio.classList.remove('pausado');
     clearInterval(timer);
     segundos = 0;
     relogio.innerHTML = '00:00:00';
-    relogio.style.color = 'black';
-});
+}); **/
+}
+
+cronometro();

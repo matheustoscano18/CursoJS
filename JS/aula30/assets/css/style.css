@@ -29,3 +29,7 @@ body {
 .relogio {
   font-size: 3rem;
 }
+
+.pausado {
+  color: red;
+}
